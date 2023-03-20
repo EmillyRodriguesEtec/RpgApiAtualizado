@@ -1,13 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using RpgApiAvaliacao.Models;
 using RpgApiAvaliacao.Models.Enuns;
-using  System.Linq;
+using System.Linq;
 
 namespace RpgApiAvaliacao.Controllers
 {
     [ApiController]
     [Route("[Controller]")]
-    public class PersonagensExercicioController: ControllerBase
+    public class PersonagensExercicioController : ControllerBase
     {
         private static List<Personagem> personagens = new List<Personagem>()
         {
@@ -23,24 +23,28 @@ namespace RpgApiAvaliacao.Controllers
 
         // metodos
         [HttpGet("{nome}")]
-        public IActionResult GetByNome (string nome){
+        public IActionResult GetByNome(string nome)
+        {
             Personagem personagemNome = personagens.FirstOrDefault(p => p.Nome == nome);
-            if (personagemNome == null){
+            if (personagemNome == null)
+            {
                 return NotFound("Não foi encontrado um personagem com esse nome");
             }
-            else{
+            else
+            {
                 return Ok(personagemNome);
             }
         }
 
         [HttpPost("PostValidacao")]
-        public IActionResult PostValidacao (Personagem personagemAdicionado)
+        public IActionResult PostValidacao(Personagem personagemAdicionado)
         {
-            if(personagemAdicionado.Defesa < 10 || personagemAdicionado.Inteligencia > 30)
+            if (personagemAdicionado.Defesa < 10 || personagemAdicionado.Inteligencia > 30)
             {
                 return BadRequest("A defesa precisa ser maior que 10 ou a inteligência menor que 30");
             }
-            else{
+            else
+            {
                 personagens.Add(personagemAdicionado);
                 return Ok(personagens);
             }
@@ -48,13 +52,14 @@ namespace RpgApiAvaliacao.Controllers
         }
 
         [HttpPost("PostValidacaoMago")]
-        public IActionResult PostValidacaoMago (Personagem personagemAdicionado)
+        public IActionResult PostValidacaoMago(Personagem personagemAdicionado)
         {
-            if(personagemAdicionado.Inteligencia < 35)
+            if (personagemAdicionado.Inteligencia < 35)
             {
                 return BadRequest("A inteligência precisa ser maior que 35");
             }
-            else{
+            else
+            {
                 personagens.Add(personagemAdicionado);
                 return Ok(personagens);
             }
@@ -70,4 +75,4 @@ namespace RpgApiAvaliacao.Controllers
 
     }
 
-    }
+}
